@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+const val SIZE_KEY = "somekeyvalue"
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +25,15 @@ class MainActivity : AppCompatActivity() {
 
             // TODO Step 2: Implement lambda body to launch new activity and pass value
             adapter = TextSizeAdapter(textSizes){
+                startActivity(
+                    intent(
+                        this@MainActivity,
+                        DisplayActivity::class.java
+
+                    ).apply{
+                        putExtra(SIZE_KEY, textSize.toFloat())
+                    }
+                )
 
             }
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -35,13 +45,15 @@ class MainActivity : AppCompatActivity() {
 }
 
 
+
+
 /* Convert to RecyclerView.Adapter */
-class TextSizeAdapter (private val textSizes: Array<Int>, callback: (Int)->Unit) : RecyclerView.Adapter<TextSizeAdapter.TextSizeViewHolder>() {
+class TextSizeAdapter (private val textSizes: Array<Int>, private val callback: (Int)->Unit) : RecyclerView.Adapter<TextSizeAdapter.TextSizeViewHolder>() {
 
     // TODO Step 1: Complete onClickListener to return selected number
     inner class TextSizeViewHolder(val textView: TextView) : RecyclerView.ViewHolder (textView) {
         init {
-            textView.setOnClickListener {  }
+            textView.setOnClickListener { callback(textSizes[adapterPosition])}
         }
     }
 
