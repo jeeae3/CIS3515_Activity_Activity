@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -24,12 +25,11 @@ class MainActivity : AppCompatActivity() {
         with (findViewById<RecyclerView>(R.id.textSizeSelectorRecyclerView)) {
 
             // TODO Step 2: Implement lambda body to launch new activity and pass value
-            adapter = TextSizeAdapter(textSizes){
+            adapter = TextSizeAdapter(textSizes){ textSize ->
                 startActivity(
-                    intent(
+                    Intent(
                         this@MainActivity,
                         DisplayActivity::class.java
-
                     ).apply{
                         putExtra(SIZE_KEY, textSize.toFloat())
                     }
@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
             }
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
-
-
 
     }
 }
